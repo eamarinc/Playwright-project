@@ -24,7 +24,7 @@ def test_place_order_should_not_show_modal_with_empty_cart(home_page):
     
     # Step 2: Click on "Cart" menu
     home_page.click_cart()
-    time.sleep(2)  # Wait for cart page to load
+    home_page.page.wait_for_url("**/cart.html", timeout=5000)  # Wait for cart page to load
     
     # Verify we are on the cart page
     assert "cart.html" in home_page.page.url, "Not on cart page"
@@ -51,7 +51,7 @@ def test_place_order_should_not_show_modal_with_empty_cart(home_page):
     print("✓ Clicked on 'Place Order' button")
     
     # Wait a moment to see if modal appears
-    time.sleep(2)
+    home_page.page.wait_for_timeout(500)
     
     # Step 5: Verify that the "Place order" modal is NOT displayed (EXPECTED behavior)
     modal_visible = home_page.is_place_order_modal_visible()
@@ -79,7 +79,7 @@ def test_place_order_with_empty_cart_documents_actual_behavior(home_page):
     
     # Step 2: Click on "Cart" menu
     home_page.click_cart()
-    time.sleep(2)  # Wait for cart page to load
+    home_page.page.wait_for_url("**/cart.html", timeout=5000)  # Wait for cart page to load
     
     # Verify we are on the cart page
     assert "cart.html" in home_page.page.url, "Not on cart page"
@@ -106,7 +106,7 @@ def test_place_order_with_empty_cart_documents_actual_behavior(home_page):
     print("✓ Clicked on 'Place Order' button")
     
     # Wait a moment for modal to appear
-    time.sleep(2)
+    home_page.page.wait_for_timeout(500)
     
     # Step 5: Verify that the modal appears (documenting ACTUAL behavior)
     modal_visible = home_page.is_place_order_modal_visible()

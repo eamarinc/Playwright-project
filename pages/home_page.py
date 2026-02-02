@@ -186,11 +186,9 @@ class HomePage:
             delete_link = self.page.locator("#tbodyid tr a").first
             delete_link.click()
             # Wait for the item to be removed
-            time.sleep(1)
+            self.page.wait_for_timeout(1000)
 
     def is_place_order_modal_visible(self) -> bool:
         """Checks if the Place Order modal is visible."""
-        try:
-            return self.place_order_modal.is_visible()
-        except:
-            return False
+        return self.place_order_modal.is_visible()
+    

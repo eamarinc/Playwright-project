@@ -50,7 +50,7 @@ def test_place_order_with_empty_cart(home_page):
     print("✓ Clicked on 'Place Order' button")
     
     # Wait a moment for modal to appear
-    time.sleep(2)
+    home_page.page.wait_for_timeout(500)
     
     # Step 5: Verify that the modal appears (documenting actual behavior)
     modal_visible = home_page.is_place_order_modal_visible()
