@@ -31,6 +31,12 @@ class HomePage:
         self.place_order_year_field = page.locator("#year")
         self.place_order_purchase_button = page.locator("#orderModal button", has_text="Purchase")
         self.place_order_close_button = page.locator("#orderModal button", has_text="Close")
+        self.contact_link = page.locator("a", has_text="Contact")
+        self.contact_modal = page.locator("#exampleModal")
+        self.contact_email_field = page.locator("#recipient-email")
+        self.contact_name_field = page.locator("#recipient-name")
+        self.contact_message_field = page.locator("#message-text")
+        self.contact_send_button = page.locator("#exampleModal button", has_text="Send message")
  
     def goto(self):
         self.page.goto(BASE_URL, wait_until="load")
@@ -192,3 +198,15 @@ class HomePage:
         """Checks if the Place Order modal is visible."""
         return self.place_order_modal.is_visible()
     
+    def click_contact_link(self):
+        """Clicks on the Contact link in the navigation."""
+        self.contact_link.click()
+        self.contact_modal.wait_for(state="visible")
+    
+    def click_send_message_button(self):
+        """Clicks the Send message button in the Contact modal."""
+        self.contact_send_button.click()
+    
+    def is_contact_modal_visible(self) -> bool:
+        """Checks if the Contact modal is visible."""
+        return self.contact_modal.is_visible()
