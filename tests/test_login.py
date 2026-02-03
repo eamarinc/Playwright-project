@@ -29,7 +29,7 @@ def test_login(home_page):
         navbar_text = home_page.page.locator("nav").text_content()
         assert f"Welcome {TEST_USER['username']}" in navbar_text, f"Welcome message not found in navbar"
 
-        # Wait one second and then log out
-        time.sleep(1)
+        # Wait and then log out
+        home_page.page.wait_for_timeout(500)
         home_page.logout()
         assert home_page.login_link.is_visible(), "Log in link not visible after logout"

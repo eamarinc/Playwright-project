@@ -1,5 +1,3 @@
-import time
-
 
 def test_place_order_with_empty_cart(home_page):
     """
@@ -23,7 +21,7 @@ def test_place_order_with_empty_cart(home_page):
     
     # Step 2: Click on "Cart" menu
     home_page.click_cart()
-    time.sleep(2)  # Wait for cart page to load
+    home_page.page.wait_for_url("**/cart.html", timeout=5000)  # Wait for cart page to load
     
     # Verify we are on the cart page
     assert "cart.html" in home_page.page.url, "Not on cart page"

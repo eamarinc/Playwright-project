@@ -1,4 +1,3 @@
-import time
 from config.config import TEST_USER
 from datetime import datetime
 
@@ -33,11 +32,15 @@ def test_place_order_modal(home_page):
     dialog.accept()
     
     # Wait a moment for the cart to update
-    time.sleep(1)
+    home_page.page.wait_for_timeout(500)
 
     # Click on "Cart" menu
     home_page.click_cart()
-    time.sleep(3)  # Wait for cart page to load
+    home_page.page.wait_for_url("**/cart.html", timeout=5000)  # Wait for cart page to load
+
+    # Wait for cart table to load
+    home_page.page.locator("#tbodyid").wait_for(state="visible", timeout=5000)
+    home_page.page.wait_for_load_state("load")
 
     # Verify we are on the cart page
     assert "cart.html" in home_page.page.url, "Not on cart page"
@@ -92,7 +95,7 @@ def test_place_order_modal(home_page):
     home_page.click_place_order_button()
     
     # Wait for modal to be visible
-    time.sleep(1)
+    home_page.page.wait_for_timeout(500)
     
     # Verify that the "Place order" modal is displayed
     place_order_modal = home_page.get_place_order_modal()
@@ -138,7 +141,7 @@ def test_place_order_modal(home_page):
     home_page.click_purchase_button()
     
     # Wait for confirmation modal to appear
-    time.sleep(2)
+    home_page.page.wait_for_timeout(500)
     
     # Verify the confirmation modal is displayed
     confirmation_modal = home_page.page.locator(".sweet-alert")
@@ -183,7 +186,7 @@ def test_place_order_modal(home_page):
     print("✓ Clicked OK button")
     
     # Wait for modal to close
-    time.sleep(1)
+    home_page.page.wait_for_timeout(500)
     
     # Verify the confirmation modal is no longer visible
     assert not confirmation_modal.is_visible(), "Confirmation modal is still visible after clicking OK"

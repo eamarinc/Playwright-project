@@ -1,15 +1,11 @@
-import time
-import pytest
 
-
-@pytest.mark.xfail(reason="Application shows modal even with empty cart - potential bug")
 def test_place_order_should_not_show_modal_with_empty_cart(home_page):
     """
     Test that verifies the Place Order button SHOULD NOT show the modal 
     when the cart is empty (expected behavior).
     
-    This test is marked as xfail because the application currently shows
-    the modal even with an empty cart, which is considered unexpected behavior.
+    This test will FAIL if the application shows the modal with an empty cart,
+    which is considered a bug.
     
     Steps:
     1. Open https://www.demoblaze.com/index.html
@@ -55,7 +51,7 @@ def test_place_order_should_not_show_modal_with_empty_cart(home_page):
     
     # Step 5: Verify that the "Place order" modal is NOT displayed (EXPECTED behavior)
     modal_visible = home_page.is_place_order_modal_visible()
-    assert not modal_visible, "Place Order modal should NOT be visible when cart is empty"
+    assert not modal_visible, "BUG DETECTED: Place Order modal should NOT be visible when cart is empty, but it is displayed!"
     print("✓ Verified: Place Order modal is NOT displayed (as expected for empty cart)")
     
     print("\n✓ Test passed: Cannot place order with empty cart")
