@@ -24,7 +24,8 @@ def test_login(home_page):
         # Verify the modal is closed and back to home
         assert not home_page.login_modal.is_visible(), "Log in modal is still visible"
         assert home_page.carousel_inner.is_visible(), "Not back to home page, carousel not visible"
-
+        # Wait for welcome message to appear
+        home_page.welcome_message.wait_for(state="visible", timeout=10000)
         # Verify "Welcome Edgartesting123" is displayed instead of "Log in"
         navbar_text = home_page.page.locator("nav").text_content()
         assert f"Welcome {TEST_USER['username']}" in navbar_text, f"Welcome message not found in navbar"

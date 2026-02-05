@@ -1,19 +1,18 @@
 
 def test_place_order_with_empty_cart(home_page):
     """
-    Test that verifies the behavior when trying to place an order 
-    with an empty cart.
+    Test that verifies the Place Order modal should NOT appear 
+    when trying to place an order with an empty cart.
     
     Steps:
     1. Open https://www.demoblaze.com/index.html
     2. Click on "Cart" menu
     3. Verify there are no products in the cart, if there are, delete them
     4. Click on "Place Order" button
-    5. Verify the behavior with empty cart
+    5. Assert that the modal does NOT appear (expected behavior)
     
-    Note: This test documents the actual behavior where the Place Order modal
-    DOES appear even with an empty cart. Ideally, it should not appear or
-    should show a validation message.
+    Expected: The modal should not appear or should show a validation message
+    when the cart is empty.
     """
     
     # Step 1: Already done by fixture (home_page.goto())
@@ -47,30 +46,14 @@ def test_place_order_with_empty_cart(home_page):
     place_order_button.click()
     print("✓ Clicked on 'Place Order' button")
     
-    # Wait a moment for modal to appear
+    # Wait a moment for modal to potentially appear
     home_page.page.wait_for_timeout(500)
     
-    # Step 5: Verify that the modal appears (documenting actual behavior)
+    # Step 5: Verify that the modal SHOULD NOT appear with empty cart
     modal_visible = home_page.is_place_order_modal_visible()
     
-    # The application currently shows the modal even with empty cart
-    # This documents the actual behavior
-    if modal_visible:
-        print("⚠️  Place Order modal IS displayed (even with empty cart)")
-        print("    Note: This may be unexpected behavior - ideally the modal")
-        print("    should not appear or show validation when cart is empty")
-        
-        # Verify the modal total is 0
-        modal_total_element = home_page.page.locator("#totalm")
-        if modal_total_element.is_visible():
-            modal_total_text = modal_total_element.text_content()
-            print(f"    Modal total text: '{modal_total_text}'")
-            # When cart is empty, the total might be empty string or "0"
-        
-        # Close the modal
-        home_page.close_place_order_modal()
-        print("✓ Closed Place Order modal")
-    else:
-        print("✓ Place Order modal is NOT displayed (expected behavior)")
+    # Assert that the modal should NOT be visible when cart is empty
+    assert not modal_visible, "Place Order modal should NOT appear when cart is empty"
     
-    print("\n✓ Test completed: Documented behavior with empty cart")
+    print("✓ Place Order modal correctly NOT displayed with empty cart")
+    print("\n✓ Test completed: Validated that modal does not appear with empty cart")

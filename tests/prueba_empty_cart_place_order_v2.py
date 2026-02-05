@@ -1,4 +1,7 @@
 
+import pytest
+
+@pytest.mark.skip(reason="Test no terminado")
 def test_place_order_should_not_show_modal_with_empty_cart(home_page):
     """
     Test that verifies the Place Order button SHOULD NOT show the modal 

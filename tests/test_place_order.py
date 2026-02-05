@@ -31,20 +31,19 @@ def test_place_order_modal(home_page):
     # Verify the dialog message confirms product was added
     assert dialog.message == "Product added.", f"Expected 'Product added.', got '{dialog.message}'"
     dialog.accept()
-    
-    # Wait a moment for the cart to update
-    home_page.page.wait_for_timeout(500)
 
     # Click on "Cart" menu
     home_page.click_cart()
-    home_page.page.wait_for_url("**/cart.html", timeout=5000)  # Wait for cart page to load
-
-    # Wait for cart table to load
-    home_page.page.locator("#tbodyid").wait_for(state="visible", timeout=5000)
-    home_page.page.wait_for_load_state("load")
+    home_page.page.wait_for_url("**/cart.html", timeout=10000)
 
     # Verify we are on the cart page
     assert "cart.html" in home_page.page.url, "Not on cart page"
+    
+    # Wait for cart table body to be attached to DOM
+    home_page.page.locator("#tbodyid").wait_for(state="attached", timeout=10000)
+    
+    # Wait for the specific product to appear in cart
+    home_page.page.locator("#tbodyid tr").filter(has_text="Samsung galaxy s7").first.wait_for(state="visible", timeout=10000)
 
     # Verify the product is in the cart
     cart_product_row = home_page.page.locator("#tbodyid tr").filter(has_text="Samsung galaxy s7")
@@ -159,7 +158,7 @@ def test_place_order_modal(home_page):
     
     # Extract and verify the date from the confirmation
     
-    """ date_match = re.search(r'Date:\s*(\d{1,2}/\d{1,2}/\d{4})', confirmation_text)
+    date_match = re.search(r'Date:\s*(\d{1,2}/\d{1,2}/\d{4})', confirmation_text)
     if date_match:
         purchase_date_str = date_match.group(1)
         print(f"Purchase date found: {purchase_date_str}")
@@ -178,7 +177,7 @@ def test_place_order_modal(home_page):
     else:
         print("Warning: Date not found in confirmation text")
     
-    print("\n✓ Purchase completed successfully!") """
+    print("\n✓ Purchase completed successfully!")
     
     # Click the "OK" button in the confirmation modal
     ok_button = home_page.page.locator(".sweet-alert button.confirm")

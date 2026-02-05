@@ -31,21 +31,18 @@ def test_add_samsung_galaxy_s7_to_cart(home_page):
     assert dialog.message == "Product added.", f"Expected 'Product added.', got '{dialog.message}'"
     dialog.accept()
     
-    # Wait a moment for the cart to update
-    home_page.page.wait_for_timeout(500)
-
     # Click on "Cart" menu
     home_page.click_cart()
-    home_page.page.wait_for_url("**/cart.html", timeout=5000)  # Wait for cart page to load
-    #home_page.page.wait_for_load_state("load")
-    #time.sleep(1)  # Ensure cart page is fully loaded
-
-    # Wait for cart table to load
-    home_page.page.locator("#tbodyid").wait_for(state="visible", timeout=5000)
-    home_page.page.wait_for_load_state("load")
+    home_page.page.wait_for_url("**/cart.html", timeout=10000)
 
     # Verify we are on the cart page
     assert "cart.html" in home_page.page.url, "Not on cart page"
+    
+    # Wait for cart table body to be attached to DOM
+    home_page.page.locator("#tbodyid").wait_for(state="attached", timeout=10000)
+    
+    # Wait for the specific product to appear in cart
+    home_page.page.locator("#tbodyid tr").filter(has_text="Samsung galaxy s7").first.wait_for(state="visible", timeout=10000)
 
     # Verify the product is in the cart
     cart_product_row = home_page.page.locator("#tbodyid tr").filter(has_text="Samsung galaxy s7")
