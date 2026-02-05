@@ -1,4 +1,3 @@
-import time
 from config.config import TEST_USER
 
 def test_login_modal(home_page):

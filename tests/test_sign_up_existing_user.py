@@ -1,15 +1,7 @@
 from config.config import TEST_USER
 
 def test_sign_up_existing_user(home_page):
-    """Attempt to sign up with an existing user and verify the alert message.
-
-    Steps:
-    - Open Sign up modal (handled by `home_page.sign_up`)
-    - Fill username and password
-    - Click Sign up
-    - Verify alert text is "This user already exist." and accept it
-    - Verify the Sign up modal remains visible after dismissing the alert
-    """
+    """Attempt to sign up with an existing user and verify the alert message. """
     username = TEST_USER["username"]
     password = TEST_USER["password"]
 

@@ -1,4 +1,3 @@
-import time
 from config.config import TEST_USER
 
 def test_add_samsung_galaxy_s7_to_cart(home_page):
